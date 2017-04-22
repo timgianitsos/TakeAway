@@ -8,14 +8,14 @@ public class TakeAway
 	final static int takeMin = 3; //TODO ensure min is less than max
 	final static int takeMax = 7;
 	public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
+	public static final String ANSI_BLACK = "\u001B[30m";
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_WHITE = "\u001B[37m";
 
 	public static void main(String[] args) { //TODO get game parameters from arguments
 		intro();
@@ -25,6 +25,7 @@ public class TakeAway
 			System.out.println("Would you like to play again? (y)es or (n)o");
 			keepPlaying = scan.nextLine().equalsIgnoreCase("y");
 		}
+		scan.close();
 	}
 
 	static void intro() {
