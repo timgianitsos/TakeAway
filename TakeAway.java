@@ -1,13 +1,12 @@
 import java.util.Scanner;
 //Inspired by a Cyberchase episode on PBS
-//TODO add output coloring
 
 public class TakeAway 
 {
 	final static Scanner scan = new Scanner(System.in);
 	final static int startPoints = 30;
-	final static int takeMin = 2; //TODO ensure min is less than max
-	final static int takeMax = 5;
+	final static int takeMin = 3; //TODO ensure min is less than max
+	final static int takeMax = 7;
 	public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -20,11 +19,11 @@ public class TakeAway
 
 	public static void main(String[] args) { //TODO get game parameters from arguments
 		intro();
-		boolean play = true;
-		while (play) {
+		boolean keepPlaying = true;
+		while (keepPlaying) {
 			play();
 			System.out.println("Would you like to play again? (y)es or (n)o");
-			play = scan.nextLine().equalsIgnoreCase("y");
+			keepPlaying = scan.nextLine().equalsIgnoreCase("y");
 		}
 	}
 
@@ -32,7 +31,7 @@ public class TakeAway
 		System.out.println(colorString("\nWelcome to Takeaway.", ANSI_YELLOW));
 		System.out.println("You will play against the computer. The game starts with " + colorString(startPoints + "", ANSI_GREEN) + " points and you will both ");
 		System.out.println("take turns subtracting between " + colorString(takeMin + " and " + takeMax, ANSI_YELLOW) + " points away from the total. ");
-		System.out.println("The player who is " + colorString("left with too few points", ANSI_YELLOW) + " to take at the beginning of their turn loses.");
+		System.out.println("The player who is " + colorString("left with less than " + takeMin, ANSI_YELLOW) + " to take at the beginning of their turn loses.");
 	}
 
 	static void play() {
@@ -47,10 +46,7 @@ public class TakeAway
 				points -= getInt();
 			}
 			else {
-				int position = points % (takeMin + takeMax);
-				double rand = Math.random();
-				int pointsTaken = position < takeMin ? (int)(rand * (takeMax - takeMin + 1) + takeMin): //Improve random behavior
-					(int)(rand * (Math.min(position, takeMax) - Math.max(position - takeMin + 1, takeMin) + 1)) + Math.max(position - takeMin + 1, takeMin);
+				int pointsTaken = AI.getMove(points);
 				System.out.println("Your " + colorString("opponent", ANSI_RED) + " takes " + colorString(pointsTaken + "", ANSI_RED) + " point(s).");
 				points -= pointsTaken;
 			}
