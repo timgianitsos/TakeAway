@@ -70,11 +70,24 @@ public class TakeAway
 			return AI.getMove(points);
 		}
 		else {
-			//TODO implement fail proof logic to get check input
-			System.out.print(ANSI_CYAN);
-			int result = scan.nextInt();
-			System.out.print(ANSI_RESET);
-			scan.nextLine();
+			int result = -1;
+			boolean invalidNumber;
+			do {
+				System.out.print(ANSI_CYAN);
+				while (!scan.hasNextInt()) {
+					System.out.print(ANSI_RESET);
+					String notAnInt = scan.nextLine();
+					System.out.println(notAnInt + " is not an integer.");
+					System.out.print(ANSI_CYAN);
+				}
+				System.out.print(ANSI_RESET);
+				result = scan.nextInt();
+				scan.nextLine();
+				invalidNumber = result < takeMin || result > takeMax;
+				if (invalidNumber) {
+					System.out.println(result + " is not between " + takeMin + " and " + takeMax + ".");
+				}
+			} while (invalidNumber);
 			return result;
 		}
 	}
@@ -89,29 +102,3 @@ public class TakeAway
 		return color + message + ANSI_RESET;
 	}
 }
-
-
-	// prompt the user for an int. The String prompt will
-	// be printed out. I expect key is connected to System.in.
-	// public static int getInt(Scanner key, String prompt, char[][] b) {
-	// 	int result = -1;
-	// 	boolean invalidNumber;
-	// 	do {
-	// 		System.out.print(prompt);
-	// 		while (!key.hasNextInt()) {
-	// 			String notAnInt = key.nextLine();
-	// 			System.out.println("\n" + notAnInt + " is not an integer.");
-	// 			System.out.print(prompt);
-	// 		}
-	// 		result = key.nextInt();
-	// 		invalidNumber = result < 1 || result > COLUMNS || b[0][result - 1] != EMPTY;
-	// 		if (invalidNumber) {
-	// 			System.out.println("\n" + result + " is not a valid column.");
-	// 			key.nextLine();
-	// 		}
-	// 	} while (invalidNumber);
-	// 	key.nextLine();
-	// 	return result;
-	// }
-
-
