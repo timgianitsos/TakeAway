@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class TakeAway 
 {
 	final static Scanner scan = new Scanner(System.in);
-	static int startPoints = 30;
+	static int startPoints = 20;
 	static int takeMin = 1;
 	static int takeMax = 3;
 	static boolean simulate = false;
@@ -14,7 +14,7 @@ public class TakeAway
 	public static final String ANSI_YELLOW = "\u001B[33m";
 	public static final String ANSI_CYAN = "\u001B[36m";
 
-	public static void main(String[] args) { //TODO get game parameters from arguments
+	public static void main(String[] args) {
 		parseArguments(args);
 		intro();
 		boolean keepPlaying = true;
@@ -26,38 +26,39 @@ public class TakeAway
 	}
 
 	static void parseArguments(String[] args) {
-		if (args != null && args.length != 0) {
+		if (args != null && args.length == 1 && args[0].equals("-h")) {
+			display("Usage: java " + TakeAway.class.toString() + " [starting_points] [take_minimum] [take_maximum] [-e | -h]");
+			display("\tstarting_points is the number of points the game starts with");
+			display("\ttake_minimum is the minimum points that can be taken on a turn");
+			display("\ttake_maximum is the maximum points that can be taken on a turn");
+			display("\t-e is easy mode, -h is hard mode. The default is hard");
+			System.exit(0);
+		}
+		else if (args != null && args.length != 0) {
 			try {
 				startPoints = Integer.parseInt(args[0]);
 				takeMin = Integer.parseInt(args[1]);
 				takeMax = Integer.parseInt(args[2]);
+				AI.easyMode = args[3].startsWith("e");
+				if (startPoints < 1) {
+					throw new Exception();
+				}
 				if (takeMin > takeMax || takeMin < 1 || takeMax < 1) {
 					throw new Exception();
 				}
-				AI.easyMode = args[3].startsWith("e");
 			}
 			catch (Exception e) {
 				System.err.println(colorString("Invalid command line arguments. Using defaults...", ANSI_RED));
-				startPoints = 30;
+				startPoints = 20;
 				takeMin = 1;
 				takeMax = 3;
 				AI.easyMode = false;
 			}
 		}
-		if (takeMin > takeMax) {
-			System.err.println(colorString("The default minimum value that can be taken must be less than or equal to the maximum.", ANSI_RED));
-			System.err.println(colorString("Try modifying takeMin and takeMax.", ANSI_RED));
-			System.exit(-1);
-		}
-		if (takeMin < 1 || takeMax < 1) {
-			System.err.println(colorString("The default minimum and maximum values must be positive.", ANSI_RED));
-			System.err.println(colorString("Try modifying takeMin and takeMax.", ANSI_RED));
-			System.exit(-1);
-		}
 	}
 
 	static void intro() {
-		display(colorString("\nWelcome to Takeaway.", ANSI_YELLOW));
+		display(colorString("\nWelcome to Takeaway. Use the -h flag for help", ANSI_YELLOW));
 		display("You will play against the computer. The game starts with " + colorString(startPoints + "", ANSI_GREEN) + " points and you will ");
 		display("both take turns subtracting between " + colorString(takeMin + " and " + takeMax, ANSI_YELLOW) + " points away from the total. ");
 		display("The player who is " + colorString("left with less than " + takeMin, ANSI_YELLOW) + " to take at the beginning of their turn loses.");
@@ -104,7 +105,6 @@ public class TakeAway
 		else {
 			int result = -1;
 			boolean invalidNumber;
-			//TODO prevent taking more than available
 			do {
 				System.out.print(ANSI_CYAN);
 				while (!scan.hasNextInt()) {
