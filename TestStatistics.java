@@ -87,6 +87,7 @@ class TestStatistics {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter two numbers, or 0 to quit");
 		int min = scan.nextInt();
 		while (min != 0) {
 			int max = scan.nextInt();
@@ -111,7 +112,7 @@ class TestStatistics {
 			}
 
 			printWaysToLose(waysToLose, minPerRow, min, max);
-
+			System.out.println("Enter two numbers, or 0 to quit");
 			min = scan.nextInt();
 		}
 		scan.close();
