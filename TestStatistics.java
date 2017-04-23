@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 /*
 Poison numbers are values that, if a player starts their turn on, guarentees them to lose if their opponent plays optimally.
 
@@ -115,6 +114,7 @@ class TestStatistics {
 
 			min = scan.nextInt();
 		}
+		scan.close();
 	}
 
 	static void printWaysToLose(int[][] waysToLose, int[] minPerRow, int min, int max) {
