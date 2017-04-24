@@ -39,7 +39,7 @@ public class TakeAway
 				startPoints = Integer.parseInt(args[0]);
 				takeMin = Integer.parseInt(args[1]);
 				takeMax = Integer.parseInt(args[2]);
-				AI.easyMode = args[3].startsWith("e");
+				AI.easyMode = args[3].startsWith("-e");
 				if (startPoints < 1) {
 					throw new Exception();
 				}
