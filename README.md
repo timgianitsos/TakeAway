@@ -3,3 +3,7 @@
 ```bash
 javac *.java && java TakeAway
 ```
+
+TODO: look into this
+`https://en.wikipedia.org/wiki/Nimber`
+
